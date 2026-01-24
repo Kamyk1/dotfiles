@@ -22,4 +22,4 @@ pipewire-pulse
 wireplumber
 pipewire-alsa
 pipewire-jack
-qt5-tools
+brave
