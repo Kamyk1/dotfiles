@@ -1,7 +1,6 @@
-steam-native-runtime
+steam
 discord
-spotify
-yay
+spotify-launcher
 fastfetch
 git
 libreoffice
@@ -14,7 +13,6 @@ cmake
 pkgconf
 boost
 sdl2
-glfw3
 lutris
 ufw
 localsend
@@ -24,4 +22,4 @@ pipewire-pulse
 wireplumber
 pipewire-alsa
 pipewire-jack
-pipewire-media-session
+qt5-tools
