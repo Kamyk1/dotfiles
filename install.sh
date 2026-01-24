@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+cp -r "config/wallpapers/mywallpaper1.mp4 ~/Wideo/"
+
 echo "🔧 Installing packages..."
 while read -r pkg; do
     if pacman -Qi "$pkg" &>/dev/null; then
@@ -33,3 +35,7 @@ sudo ufw enable
 sudo ufw status verbose
 
 echo "✅ Installation complete!"
+
+rm -rf "$HOME/Pulpit/dotfiles"
+
+sleep 5
