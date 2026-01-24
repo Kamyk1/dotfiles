@@ -23,3 +23,5 @@ wireplumber
 pipewire-alsa
 pipewire-jack
 brave
+jdk-openjdk
+xclip
