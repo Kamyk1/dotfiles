@@ -25,3 +25,4 @@ pipewire-jack
 brave
 jdk-openjdk
 xclip
+micro
