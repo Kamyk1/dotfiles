@@ -1,0 +1,41 @@
+/* WYMUSZENIE KOLORU NA ZMIENNYCH - dopasowane odcienie */
+:root {
+    --spice-main: #1a100f !important;             /* Srodek */
+    --spice-sidebar: #241816 !important;          /* Lewo (jasniejszy) */
+    --spice-player: #140d0c !important;           /* Dol (najciemniejszy) */
+    --background-base: #1a100f !important;
+    --background-elevated-base: #241816 !important;
+    --background-elevated-highlight: #4d322d !important;
+}
+
+/* GORA I DOL: Ten sam ciemniejszy braz (#140d0c) */
+.main-topBar-container,
+.main-topBar-background,
+.main-topBar-overlay,
+header,
+.Root__top-container,
+.Root__now-playing-bar,
+footer {
+    background-color: #140d0c !important;
+    background-image: none !important;
+}
+
+/* LEWO: Biblioteka - teraz troche jasniejszy braz (#241816) */
+.main-yourLibraryX-libraryRoot,
+.main-yourLibraryX-libraryContainer,
+[data-testid="left-sidebar-container"],
+.main-navBar-navBar {
+    background-color: #241816 !important;
+}
+
+/* SRODEK: Glowne tlo po prawej (#1a100f) */
+.Root__main-view,
+main,
+.main-view-container__scroll-node-child {
+    background-color: #1a100f !important;
+}
+
+/* Usuniecie cienia pod gornym paskiem */
+.main-topBar-background {
+    box-shadow: none !important;
+}

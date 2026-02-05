@@ -1,9 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
-START_DIR="$(pwd)"
+# Zapamiętujemy gdzie jest główny folder dotfiles, żeby cp zawsze działało
+DOTFILES_DIR=$(pwd)
 
-cp config/wallpapers/mywallpaper1.mp4 ~/Wideo/
+sudo pacman -Syu pipewire-jack
 
 echo "Installing packages..."
 while read -r pkg; do
@@ -19,7 +20,7 @@ clear
 
 echo "Setting up PipeWire config..."
 mkdir -p "$HOME/.config/pipewire/pipewire.conf.d"
-cp -r config/pipewire/pipewire.conf.d/* "$HOME/.config/pipewire/pipewire.conf.d/"
+cp -r "$DOTFILES_DIR/config/pipewire/pipewire.conf.d/"* "$HOME/.config/pipewire/pipewire.conf.d/"
 
 echo "Restarting PipeWire services..."
 systemctl --user enable --now pipewire pipewire-pulse wireplumber
@@ -30,39 +31,37 @@ clear
 echo "Configuring UFW firewall..."
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
-
 sudo ufw allow ssh
-
 sudo ufw allow 80/tcp
 sudo ufw allow 443/tcp
-
-sudo ufw enable
-
-sudo ufw status verbose
+sudo ufw --force enable # --force, żeby nie pytał o potwierdzenie w skrypcie
 
 clear
 
 echo "Setting up BetterDiscord"
-curl -fsSL https://bun.com/install | bash
+# Upewnij się, że masz zainstalowany 'betterdiscordctl' i 'discord' w packages.txt
+betterdiscordctl install
+mkdir -p "$HOME/.config/BetterDiscord/themes"
+cp "$DOTFILES_DIR/config/Betterdiscord/style.css" "$HOME/.config/BetterDiscord/themes/"
 
-cd ~/
-git clone --single-branch -b main https://github.com/BetterDiscord/BetterDiscord.git
-cd ~/BetterDiscord
-bun install
-bun run build
-bun inject
+echo "Setting up Spicetify with CachyBrown theme..."
+# Instalacja spicetify-cli (bezpiecznie używa binarek)
+curl -fsSL https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.sh | sh
 
-echo "Setting up Kde Themes"
+# Poprawione literówki i ścieżki
+mkdir -p "$HOME/.config/spicetify/Themes/CachyBrown"
+cp -r "$DOTFILES_DIR/config/spotify/CachyBrown/"* "$HOME/.config/spicetify/Themes/CachyBrown/"
 
-sh "$START_DIR/install-kde.sh"
+# Backup i Apply (poprawione 'spicetfiy')
+spicetify backup apply || spicetify apply 
+spicetify config current_theme CachyBrown
+spicetify apply
 
-echo "Setting up Alacritty"
-
-git clone https://github.com/rose-pine/alacritty.git
-cp ./alacritty/dist/* ~/.config/alacritty
-printf '\n[general]\nimport = ["rose-pine.toml"]\n' > ~/.config/alacritty/alacritty.toml
+echo "Setting up iNiR"
+cd "$HOME"
+git clone https://github.com/snowarch/inir.git || true # || true w razie gdyby folder już istniał
+cd inir
+./setup install
 
 echo "Installation complete!"
-rm -rf $HOME/Pulpit/dotfiles
-
 sleep 5
